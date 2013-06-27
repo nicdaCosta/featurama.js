@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # featurama.js
 
 A framework to group and run feature detection tests, then cache the results in a single location for use.
@@ -152,9 +151,3 @@ _View the unit tests for further examples_
 
 ## Release History
 v 0.8.0 - initial release. 28/06/2013
-=======
-featurama.js
-============
-
-A framework to group and run feature detection tests, then cache the results in a single location for use.
->>>>>>> c418ea5a814c9be43556a259aae4cf61f19d1f5c
