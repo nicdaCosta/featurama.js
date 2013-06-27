@@ -5,10 +5,18 @@ A framework to group and run feature detection tests, then cache the results in 
 ## Getting Started
 Download the [production version][min] or the [development version][max] and ensure that [modernizr.js][modernizr] and [rsvp.js][rsvp] are referenced prior to featurama.js.
 
+
+alternatively, you can use [bower][bower] to install this using the following:
+
+```
+	bower install featurama.js
+```
+
 [min]: https://raw.github.com/nicdacosta/featurama.js/master/dist/featurama.min.js
 [max]: https://raw.github.com/nicdacosta/featurama.js/master/dist/featurama.js
 [modernizr]: http://modernizr.com/
 [rsvp]: https://github.com/tildeio/rsvp.js/
+[bower]: http://bower.io/
 
 In your web page:
 
