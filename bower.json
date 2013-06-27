@@ -1,0 +1,15 @@
+{
+  "name": "featurama",
+  "description": "A framework to group and run feature detection tests, then cache the results in a single location for use.",
+  "version": "0.0.8",
+  "homepage": "git://github.com/nicdacosta/featurama.js.git",
+  "main": [
+    "featuramajs"
+  ],
+  "author": "Nic da Costa <nic@dsgnrhead.com>",
+  "ignore": [ "/node_modules/" ],
+  "dependencies": {
+    "modernizr": "2.6.2",
+    "RSVP": "git://github.com/tildeio/rsvp.js.git"
+  }
+}

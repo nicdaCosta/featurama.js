@@ -1,0 +1,28 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "browser": true,
+  "predef": [
+    "describe",
+    "xdescribe",
+    "it",
+    "xit",
+    "runs",
+    "beforeEach",
+    "afterEach",
+    "expect",
+    "jasmine",
+    "waitsFor",
+    "__dirname",
+    "exports"
+  ]
+}
