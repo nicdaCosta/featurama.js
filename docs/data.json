@@ -1,0 +1,558 @@
+{
+    "project": {
+        "name": "featurama",
+        "description": "A framework to group and run feature detection tests, then cache the results in a single location for use.",
+        "version": "0.0.8",
+        "url": "https://github.com/nicdacosta/featurama.js"
+    },
+    "files": {
+        "src/featurama.js": {
+            "name": "src/featurama.js",
+            "modules": {
+                "featurama": 1
+            },
+            "classes": {
+                "featurama": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "featurama": {
+            "name": "featurama",
+            "submodules": {},
+            "classes": {
+                "featurama": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/featurama.js",
+            "line": 13
+        }
+    },
+    "classes": {
+        "featurama": {
+            "name": "featurama",
+            "shortname": "featurama",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "featurama",
+            "namespace": "",
+            "file": "src/featurama.js",
+            "line": 13
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/featurama.js",
+            "line": 1,
+            "description": "featurama.js\nhttps://github.com/nicdacosta/featurama.js\nversion: 0.0.8\n\nCopyright (c) 2013 Nic da Costa\nLicensed under the MIT license.\n\nBig thanks to the Basket.js ( https://github.com/addyosmani/basket.js ) team where alot of the inspiration in structure and methods came from.\nTODO\t: Add other methods , Refactor. . Need to investigate using reject as opposed to resolve( false ) should a test fail and investigate removing rerun method due to localStorage issues.",
+            "class": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 25,
+            "description": "Used to get content of an external dependancy. Returns a promise so that we can detect when load has been completed along with status",
+            "itemtype": "method",
+            "name": "getURL",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "The URL of the required dependancy",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 66,
+            "description": "Used to insert content of an external dependancy into a script tag and append script to the head.",
+            "itemtype": "method",
+            "name": "injectScript",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "source",
+                    "description": "Source/content of script that needs to be injected",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 84,
+            "description": "Used to add a test case to localStorage. This is then used for re-running the test so user does not need to recreate the test.",
+            "itemtype": "method",
+            "name": "addToLocalStorage",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key of the test that needs to be cached",
+                    "type": "String"
+                },
+                {
+                    "name": "storeObj",
+                    "description": "The test object that needs to be stored in localStorage",
+                    "type": "Object"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 109,
+            "description": "Used to fetch any given test from storage. If no test is found, returns false",
+            "itemtype": "method",
+            "name": "getFromLocalStorage",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "key of the test that needs to be fetched form cache / localStorage",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 140,
+            "description": "Used to remove a test from cache.",
+            "itemtype": "method",
+            "name": "removeFromLocalStorage",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "key of the test that needs to be removed from cache / localStorage.",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 156,
+            "description": "Used to get all test keys from localStorage. Not sure if necessary. Included just in case",
+            "itemtype": "method",
+            "name": "getAllFromLocalStorage",
+            "access": "private",
+            "tagname": "",
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 184,
+            "description": "Used to determine if there is a cached version for a given key and if the version of the cached version differs from that of the test to be added. Returns Boolean",
+            "needsupdate": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "object test to be run and added to cached / localStorage",
+                    "type": "Object"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 208,
+            "description": "Used to extend one object with another's properties, aka clone. This is used when writing the tests to localStorage so not to modify the original test.",
+            "itemtype": "method",
+            "name": "extendObject",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obtToExtend",
+                    "description": "object that will be extended",
+                    "type": "Object"
+                },
+                {
+                    "name": "objToInherit",
+                    "description": "object to be cloned.",
+                    "type": "Object"
+                },
+                {
+                    "name": "overrite",
+                    "description": "flag on whether to overwrite a property should it exist in the object to extend",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 245,
+            "description": "Used to check the config ( featurama.config ) object to see if the given test has any overrides.",
+            "itemtype": "method",
+            "name": "getConfigResult",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "key for test that is used to check the config for an override",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 304,
+            "description": "Used to remove a given key from the config object. Not sure if necessary. Included just in case",
+            "itemtype": "method",
+            "name": "removeConfigResult",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "key of the property that is to be removed.",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 325,
+            "description": "Used to remove a given key with the results from the results object. Not sure if necessary. Included just in case",
+            "itemtype": "method",
+            "name": "removeResult",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "key of the property that is to be removed.",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 346,
+            "description": "Used to obtain the value of a property of Modernizr. It checks if modernizr is defined, if not, it fetches it and then runs through getProperty again to return the correct result\nTODO: allow custom dependancies sot hat you can specify which object you want the property from. Setup a default fetch URL for given dependancy",
+            "itemtype": "method",
+            "name": "getProperty",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "propertyName",
+                    "description": "the name of the property that is requied",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 384,
+            "description": "This is the main entry point for tests. Acts as a feeder function for runTest. Itterates through all tests. Checks if test key has already been run, \nif so creates a new promise and resolves this with the cached value for the test, else runs the test. Should the test need to be re-run for a new output, use rerun method. \nShould a new test be required for the given key, use te removeItem method to clear the test and then run the test with the new test object.",
+            "itemtype": "method",
+            "name": "handleTests",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "objTests",
+                    "description": "the object of the test to run. Can have multiple properties, each one will be an object of a test to run.",
+                    "type": "Object"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 415,
+            "description": "This is the main method that runs the tests. It builds an array of promises and results that is returned by the various methods and then sets the results once all the promises have been resolved\nTthis recieves the test object from the feeder function ( handleTests )",
+            "itemtype": "method",
+            "name": "runTest",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "the object of the test to run",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "Modernizr",
+                            "description": "An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "custom",
+                            "description": "This can be either a function or an array of functions. This is for custom tests that need to be runned. These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "key",
+                            "description": "A string of the key that will be used in the results object to identify the current test",
+                            "type": "String"
+                        },
+                        {
+                            "name": "keepExist",
+                            "description": "A boolean on whether to overwrite the result should one already exist",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "cahceTest",
+                            "description": "A boolean on whether to cache the test to localStorage. This is used in the rerun method.",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "version",
+                            "description": "A int to determine the current version of the test object. This is used for caching purposes ( needsUpdate method )",
+                            "type": "Integer"
+                        }
+                    ]
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 534,
+            "description": "This is the method that is used to rerun a given test based on the key. It expects the given key of the test to be cached in localStorage. The test is obtained, then rerun and overrides existing results.\nthis ise useful should a given test fail then a shim is loaded, allowing the developer to rerun any given test. Should the key for the test not exist in localStorage, a new promise is created and rejected with an Error\nstating that the key does not Exist.",
+            "itemtype": "method",
+            "name": "rerunTest",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key of the test to run",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 576,
+            "description": "This is the main method that updates the results object with the test results. Iterates through all results and concatenates. Checks if property must be overwritten. If so, overwrites else keeps existing result",
+            "itemtype": "method",
+            "name": "setResults",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The object of the results to set the necessary property in global results object",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "key",
+                            "description": "A string of the key that will be used in the results object to identify the current test",
+                            "type": "String"
+                        },
+                        {
+                            "name": "results",
+                            "description": "An array of all the results that need to be assigned",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "keepExisting",
+                            "description": "A boolean on whether to overwrite the result should one already exist",
+                            "type": "Boolean"
+                        }
+                    ]
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 625,
+            "description": "This is the main externally facing method which allows to add various tests and returns a Promise. This method accepts multiple parameters.\nAllowing you to pass through multiple test objects ( one per parameter ), as each one will be evaluated individually. This allows for batching of commands.\nShould no custom tests be run or no Modernizr Properties be selected, this will always set the result to true for the given key.",
+            "itemtype": "method",
+            "name": "run",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "The object of the results to set the necessary property in global results object",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "Modernizr",
+                            "description": "An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )",
+                            "type": "Array"
+                        },
+                        {
+                            "name": "custom",
+                            "description": "This can be either a function or an array of functions. This is for custom tests that need to be runned. These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.",
+                            "type": "Function|Array"
+                        },
+                        {
+                            "name": "key",
+                            "description": "A string of the key that will be used in the results object to identify the current test",
+                            "type": "String"
+                        },
+                        {
+                            "name": "keepExisting",
+                            "description": "A boolean on whether to overwrite the result should one already exist",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "cacheTest",
+                            "description": "A boolean on whether to cache the test to localStorage. This is used in the rerun method.",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "version",
+                            "description": "A int to determine the current version of the test object. This is used for caching purposes ( needsUpdate method )",
+                            "type": "Integer"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "Promise",
+                "type": "Object"
+            },
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 660,
+            "description": "This allows to rerun an existing test without having to recreate the test object / conditions and returns a Promise",
+            "itemtype": "method",
+            "name": "rerun",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key of the test to be re-run",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Promise",
+                "type": "Object"
+            },
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 676,
+            "description": "This removes a given test, based on the given key to be removed from cache as well as clear results and config for given test.",
+            "itemtype": "method",
+            "name": "remove",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key of the test to be removed from cache / localStorage",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 693,
+            "description": "This removes all tests in cache, as well as clears / resets the results and config objects.",
+            "itemtype": "method",
+            "name": "clear",
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 716,
+            "description": "This checks if the given test exists in cache / localStorage based on the key and returns a Boolean",
+            "itemtype": "method",
+            "name": "exists",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "The key of the test to check in the cache / localStorage",
+                    "type": "String"
+                }
+            ],
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 728,
+            "description": "This returns an Array of all keys currently cached / in localStorage",
+            "itemtype": "method",
+            "name": "keys",
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 739,
+            "description": "This is an object of all the results of the test. Each key of th results object will be the corresponding key of each test with a Boolean of the result from the tests run.",
+            "itemtype": "property",
+            "name": "results",
+            "type": "{Object}",
+            "class": "featurama",
+            "module": "featurama"
+        },
+        {
+            "file": "src/featurama.js",
+            "line": 747,
+            "description": "This is an object of all the overrides / configs for all the tests. This allows developers to pass a regex and an override for a given test allowing results to be \"enforced\".\nThis is mainly for certain tests that will return true on certain devices / browsers where the result should be false",
+            "itemtype": "property",
+            "name": "config",
+            "type": "{Object}",
+            "class": "featurama",
+            "module": "featurama"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: needsupdate",
+            "line": " src/featurama.js:184"
+        },
+        {
+            "message": "Missing item type\nfeaturama.js\nhttps://github.com/nicdacosta/featurama.js\nversion: 0.0.8\n\nCopyright (c) 2013 Nic da Costa\nLicensed under the MIT license.\n\nBig thanks to the Basket.js ( https://github.com/addyosmani/basket.js ) team where alot of the inspiration in structure and methods came from.\nTODO\t: Add other methods , Refactor. . Need to investigate using reject as opposed to resolve( false ) should a test fail and investigate removing rerun method due to localStorage issues.",
+            "line": " src/featurama.js:1"
+        },
+        {
+            "message": "Missing item type\nUsed to determine if there is a cached version for a given key and if the version of the cached version differs from that of the test to be added. Returns Boolean",
+            "line": " src/featurama.js:184"
+        }
+    ]
+}
