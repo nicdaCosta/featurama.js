@@ -1,6 +1,10 @@
-/*! featurama.js - v0.0.8 - 2013-06-27
+/*! featurama.js - v0.0.8 - 2013-09-18
 * https://github.com/nicdacosta/featurama.js
 * Copyright (c) 2013 Nic da Costa; Licensed MIT */
+/**
+* @module featurama
+* @class featurama
+*/
 window.featurama = ( function( window , document , undefined ) {
 
 	'use strict';
@@ -9,10 +13,13 @@ window.featurama = ( function( window , document , undefined ) {
 		storagePrefix = 'featurama-',
 		RSVP = window.RSVP;
 
-	/* Private Method getURL
-	** parameter { string } - URL of required dependancy
-	** about - used to get content of an external dependancy. Returns a promise so that we can detect when load has been completed along with status
-	**/
+	/** 
+		Used to get content of an external dependancy. Returns a promise so that we can detect when load has been completed along with status
+		
+		@method getURL
+		@private
+		@param {String} url The URL of the required dependancy
+	*/
 	var getURL = function( url ) {
 
 		var promise = new RSVP.Promise( function( resolve , reject ) {
@@ -47,10 +54,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method injectScript
-	** parameter { string } - source/content of script that needs to be injected
-	** about - used to insert content of an external dependancy into a script tag and append script to the head.
-	**/
+	/**
+		Used to insert content of an external dependancy into a script tag and append script to the head.
+		
+		@method injectScript
+		@private	
+		@param {String} source Source/content of script that needs to be injected
+	*/
 	var injectScript = function( source ) {
 
 		var script = document.createElement('script');
@@ -62,11 +72,14 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method addToLocalStorage
-	** parameter { string } - key of the test that needs to be cached
-	** parameter { object } - the test object that needs to be stored in localStorage
-	** about - used to add a test case to localStorage. This is then used for re-running the test so user does not need to recreate the test.
-	**/
+	/**
+		Used to add a test case to localStorage. This is then used for re-running the test so user does not need to recreate the test.
+		
+		@method addToLocalStorage
+		@private
+		@param {String} key The key of the test that needs to be cached
+		@param {Object} storeObj The test object that needs to be stored in localStorage
+	*/
 	var addToLocalStorage = function( key , storeObj ) {
 
 		key = key || 'key';
@@ -76,9 +89,7 @@ window.featurama = ( function( window , document , undefined ) {
 		var cachedObj = extendObject ( {} , storeObj ),
 			customType = typeof cachedObj.custom;
 
-		cachedObj.custom = ( customType === 'function' ) ? '(' + cachedObj.custom.toString() + ')' : ( Array.isArray( cachedObj.custom ) ) ? '[' + cachedObj.custom.toString() + ']' : cachedObj.custom;
-
-		//hello.custom = cachedFunction; = need to clone object
+		cachedObj.custom = ( customType === 'function' ) ? 'return (' + cachedObj.custom.toString() + ')()' : ( Array.isArray( cachedObj.custom ) ) ? '[' + cachedObj.custom.toString() + ']' : cachedObj.custom;
 
 		// TODO: Add handler to try add to localstorage and catch exception. Exception could be added if quote is full ( exceeded 5mb limit ) or if localstorage is read only.
 		// add a prefix to the keys so not to be overridden should localstorage be used elsewhere. storagePrefix is defined at the top of the IIFE.
@@ -86,10 +97,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method getFromLocalStorage
-	** parameter { string } - key of the test that needs to be fetched form cache / localStorage
-	** about - used to fetch any given test from storage. If no test is found, returns false
-	**/
+	/** 
+		Used to fetch any given test from storage. If no test is found, returns false
+		
+		@method getFromLocalStorage
+		@private
+		@param {String} key key of the test that needs to be fetched form cache / localStorage
+	*/
 	var getFromLocalStorage = function( key ) {
 
 		key = key || 'key';
@@ -102,7 +116,7 @@ window.featurama = ( function( window , document , undefined ) {
 
 			obj = JSON.parse( item || 'false' );
 
-			obj.custom = ( obj.custom ) ? eval( obj.custom ) : obj.custom;
+			obj.custom = ( obj.custom ) ? new Function( obj.custom ) : obj.custom;
 
 		} catch( e ) {
 
@@ -114,10 +128,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method removeFromLocalStorage
-	** parameter { string } - key of the test that needs to be removed from cache / localStorage.
-	** about - used to remove a test from cache.
-	**/
+	/**
+		Used to remove a test from cache.
+		
+		@method removeFromLocalStorage
+		@private
+		@param {String} key key of the test that needs to be removed from cache / localStorage.
+	*/
 	var removeFromLocalStorage = function( key ) {
 
 		key = key || 'key';
@@ -127,10 +144,12 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method getAllFromLocalStorage
-	** about - used to get all test keys from localStorage
-	** Not sure if necessary. Included just in case
-	**/
+	/** 
+		Used to get all test keys from localStorage. Not sure if necessary. Included just in case
+		
+		@method getAllFromLocalStorage
+		@private
+	*/
 	var getAllFromLocalStorage = function() {
 
 		var item,
@@ -153,10 +172,13 @@ window.featurama = ( function( window , document , undefined ) {
 		return results;
 	};
 
-	/* Private Method needsUpdate
-	** parameter { object } - object test to be run and added to cached / localStorage 
-	** about - used to determine if there is a cached version for a given key and if the version of the cached version differs from that of the test to be added. Returns Boolean
-	**/
+	/**
+		Used to determine if there is a cached version for a given key and if the version of the cached version differs from that of the test to be added. Returns Boolean
+		
+		@needsUpdate
+		@private
+		@param {Object} obj object test to be run and added to cached / localStorage
+	*/
 	var needsUpdate = function( obj ) {
 
 		var key = obj.key || 'key' ,
@@ -174,6 +196,15 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
+	/**
+		Used to extend one object with another's properties, aka clone. This is used when writing the tests to localStorage so not to modify the original test.
+		
+		@method extendObject
+		@private
+		@param {Object} obtToExtend object that will be extended
+		@param {Object} objToInherit object to be cloned.
+		@param {Boolean} overrite flag on whether to overwrite a property should it exist in the object to extend
+	*/
 	var extendObject = function( objToExtend , objToInherit , overrite ) {
 
 		objToExtend = ( typeof objToExtend === 'object') ? objToExtend : {};
@@ -202,10 +233,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method getConfigResult
-	** parameter { string } - key for test that is used to check the config for an override
-	** about - used to check the config ( featurama.config ) object to see if the given test has any overrides.
-	**/
+	/**
+		Used to check the config ( featurama.config ) object to see if the given test has any overrides.
+		
+		@method getConfigResult
+		@private
+		@param {String} key key for test that is used to check the config for an override
+	*/
 	var getConfigResult = function( key ) {
 
 		key = key || 'key';
@@ -222,7 +256,7 @@ window.featurama = ( function( window , document , undefined ) {
 					// cache the property for the given key
 					featuramaProperty = featuramaConfig[ key ];
 
-					// override result with matching regex result defined in config. Chrecks if is RegEx, if so eval against userAgent else check if array and loop through each
+					// override result with matching regex result defined in config. Chrecks if is RegEx, if so evaluate against userAgent else check if array and loop through each
 					if ( featuramaProperty.regex instanceof RegExp ) {
 
 						// set lastIndex = 0, this starts the regex.test to check from the beginning of the string. This is incase the regex has the global flagged as true.
@@ -258,11 +292,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method removeConfigResult
-	** parameter { string } - key of the property that is to be removed.
-	** about - used to remove a given key from the config object.
-	** Not sure if necessary. Included just in case
-	**/
+	/**
+		Used to remove a given key from the config object. Not sure if necessary. Included just in case
+		
+		@method removeConfigResult
+		@private
+		@param {String} key key of the property that is to be removed.
+	*/
 	var removeConfigResult = function( key ) {
 
 		key = key || 'key';
@@ -277,11 +313,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method removeResult
-	** parameter { string } - key of the property that is to be removed.
-	** about - used to remove a given key with the results from the results object.
-	** Not sure if necessary. Included just in case
-	**/
+	/** 
+		Used to remove a given key with the results from the results object. Not sure if necessary. Included just in case
+		
+		@method removeResult
+		@private
+		@param {String} key key of the property that is to be removed.
+	*/
 	var removeResult = function( key ) {
 
 		key = key || 'key';
@@ -296,11 +334,14 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method getProperty
-	** parameter { string } - the name of the property that is requied
-	** about - used to obtain the value of a property of Modernizr. It checks if modernizr is defined, if not, it fetches it and then runs through getProperty again to return the correct result
-	** TODO: allow custom dependancies sot hat you can specify which object you want the property from. Setup a default fetch URL for given dependancy
-	**/
+	/**
+		Used to obtain the value of a property of Modernizr. It checks if modernizr is defined, if not, it fetches it and then runs through getProperty again to return the correct result
+		TODO: allow custom dependancies sot hat you can specify which object you want the property from. Setup a default fetch URL for given dependancy
+		
+		@method getProperty
+		@private
+		@param {String} propertyName the name of the property that is requied
+	*/
 	var getProperty = function( propertyName ) {
 
 		propertyName = propertyName || '';
@@ -331,13 +372,15 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method handleTests
-	** parameter { object } - the object of the test to run.
-	**						Can have multiple properties, each one will be an object of a test to run.
-	** about - this is the main entry point for tests. Acts as a feeder function for runTest. Itterates through all tests. Checks if test key has already been run, 
-	**			if so creates a new promise and resolves this with the cached value for the test, else runs the test. Should the test need to be re-run for a new output, use rerun method. 
-	**			Should a new test be required for the given key, use te removeItem method to clear the test and then run the test with the new test object.
-	**/
+	/** 
+		This is the main entry point for tests. Acts as a feeder function for runTest. Itterates through all tests. Checks if test key has already been run, 
+		if so creates a new promise and resolves this with the cached value for the test, else runs the test. Should the test need to be re-run for a new output, use rerun method. 
+		Should a new test be required for the given key, use te removeItem method to clear the test and then run the test with the new test object.
+								
+		@method handleTests
+		@private
+		@param {Object} objTests the object of the test to run. Can have multiple properties, each one will be an object of a test to run.
+	*/
 	var handleTests = function() {
 
 		var key,
@@ -360,18 +403,20 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method runTest
-	** parameter { object } - the object of the test to run
-	**		parameter.prop: Modernizr { array } - An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )
-	**		parameter.prop: custom { function / array } -	This can be either a function or an array of functions. This is for custom tests that need to be runned. 
-	**														These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.
-	**		parameter.prop: key { string } - A string of the key that will be used in the results object to identify the current test
-	**		parameter.prop: keepExisting { boolean } - A boolean on whether to overwrite the result should one already exist
-	**		parameter.prop: cacheTest { boolean } - A boolean on whether to cache the test to localStorage. This is used in the rerun method.
-	**		parameter.prop: version { int } - A int to determine the current version of the test object. This is used for caching purposes ( needsUpdate method )
-	** about - this is the main method that runs the tests. It builds an array of promises and results that is returned by the various methods and then sets the results once all the promises have been resolved
-	**			this recieves the test object from the feeder function ( handleTests )
-	**/
+	/** 
+		This is the main method that runs the tests. It builds an array of promises and results that is returned by the various methods and then sets the results once all the promises have been resolved
+		Tthis recieves the test object from the feeder function ( handleTests )
+		
+		@method runTest
+		@private
+		@param {Object} obj the object of the test to run
+			@param {Array} obj.Modernizr An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )
+			@param {Array} obj.custom This can be either a function or an array of functions. This is for custom tests that need to be runned. These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.
+			@param {String} obj.key A string of the key that will be used in the results object to identify the current test
+			@param {Boolean} obj.keepExist A boolean on whether to overwrite the result should one already exist
+			@param {Boolean} obj.cahceTest A boolean on whether to cache the test to localStorage. This is used in the rerun method.
+			@param {Integer} obj.version A int to determine the current version of the test object. This is used for caching purposes ( needsUpdate method )
+	*/
 	var runTest = function( obj ) {
 
 		// setup necessary varibales and cahe properties from obj. Check if obj.property exists, if not, setup default value. TODO: refactor!!! 50% of this method can be stripped into one seperate method.
@@ -477,12 +522,15 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method rerunTest
-	** parameter { string } - the key of the test to run
-	** about - this is the method that is used to rerun a given test based on the key. It expects the given key of the test to be cached in localStorage. The test is obtained, then rerun and overrides existing results.
-	**			this ise useful should a given test fail then a shim is loaded, allowing the developer to rerun any given test. Should the key for the test not exist in localStorage, a new promise is created and rejected with an Error
-	**			stating that the key does not Exist.
-	**/
+	/**
+		This is the method that is used to rerun a given test based on the key. It expects the given key of the test to be cached in localStorage. The test is obtained, then rerun and overrides existing results.
+		this ise useful should a given test fail then a shim is loaded, allowing the developer to rerun any given test. Should the key for the test not exist in localStorage, a new promise is created and rejected with an Error
+		stating that the key does not Exist.
+		
+		@method rerunTest
+		@private
+		@param {String} key The key of the test to run
+	*/
 	var rerunTest = function( key ) {
 
 		var objToRun,
@@ -516,13 +564,16 @@ window.featurama = ( function( window , document , undefined ) {
 
 	};
 
-	/* Private Method runTest
-	** parameter { object } - the object of the results to set the necessary property in global results object
-	**		parameter.prop: key { string } - A string of the key that will be used in the results object to identify the current test
-	**		parameter.prop: results { array } - An array of all the results that need to be assigned
-	**		parameter.prop: keepExisting { boolean } - A boolean on whether to overwrite the result should one already exist
-	** about - this is the main method that updates the results object with the test results. Iterates through all results and concatenates. Checks if property must be overwritten. If so, overwrites else keeps existing result
-	**/
+	/**
+		This is the main method that updates the results object with the test results. Iterates through all results and concatenates. Checks if property must be overwritten. If so, overwrites else keeps existing result
+		
+		@method setResults
+		@private
+		@param {Object} obj The object of the results to set the necessary property in global results object
+				@param {String} obj.key A string of the key that will be used in the results object to identify the current test
+				@param {Array} obj.results An array of all the results that need to be assigned
+				@param {Boolean} obj.keepExisting A boolean on whether to overwrite the result should one already exist
+	*/
 	var setResults = function( obj ) {
 
 		var	featuramaResults = _featurama.results,
@@ -562,17 +613,22 @@ window.featurama = ( function( window , document , undefined ) {
 	// all external methods should return a promise. so when tests run, allows for .then() etc
 	var _featurama = {
 
-		/* Public Method run
-		** parameter { object } - the object of the results to set the necessary property in global results object
-		**		parameter.prop: Modernizr { array } - An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )
-		**		parameter.prop: custom { function / array } -	This can be either a function or an array of functions. This is for custom tests that need to be runned. 
-		**														These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.
-		**		parameter.prop: key { string } - A string of the key that will be used in the results object to identify the current test
-		**		parameter.prop: keepExisting { boolean } - A boolean on whether to overwrite the result should one already exist
-		**		parameter.prop: cacheTest { boolean } - A boolean on whether to cache the test in localStorage
-		** about - this is the main externally facing method which allows to add various tests and returns a Promise
-		** TODO: Handle RSVP.reject. Refactor private method. Handle Versioning of tests for localStorage interface. Allow to pass in an array of objects
-		**/
+		/**
+			This is the main externally facing method which allows to add various tests and returns a Promise. This method accepts multiple parameters.
+			Allowing you to pass through multiple test objects ( one per parameter ), as each one will be evaluated individually. This allows for batching of commands.
+			Should no custom tests be run or no Modernizr Properties be selected, this will always set the result to true for the given key.
+			
+			@method run
+			@param {Object} obj The object of the results to set the necessary property in global results object
+					@param  {Array} obj.Modernizr An array of strings of Modernizr property names ( eg: [ 'csstransform' , 'webworkers' ] )
+					@param {Function|Array} obj.custom  This can be either a function or an array of functions. This is for custom tests that need to be runned. These functions should either return a boolean of the result or else a promise that will be resolved with either true or false depending on the outcome of the test.
+					@param {String} obj.key A string of the key that will be used in the results object to identify the current test
+					@param {Boolean} obj.keepExisting A boolean on whether to overwrite the result should one already exist
+					@param {Boolean} obj.cacheTest A boolean on whether to cache the test to localStorage. This is used in the rerun method.
+					@param {Integer} obj.version A int to determine the current version of the test object. This is used for caching purposes ( needsUpdate method )
+			@return {Object} Promise
+		*/
+		// TODO: Handle RSVP.reject. Refactor private method. Handle Versioning of tests for localStorage interface. Allow to pass in an array of objects
 		run: function() {
 			// adds a specified test to the featurama ( test suite )
 			var promise;
@@ -592,10 +648,13 @@ window.featurama = ( function( window , document , undefined ) {
 
 		},
 
-		/* Public Method rerun
-		** parameter { string } - key of the test to be re-run
-		** about - this allows to rerun an existing test without having to recreate the test object / conditions and returns a Promise
-		**/
+		/** 
+			This allows to rerun an existing test without having to recreate the test object / conditions and returns a Promise
+
+			@method rerun
+			@param {String} key The key of the test to be re-run
+			@return {Object} Promise
+		*/
 		rerun: function( key ) {
 
 			// reruns a specified test again based on the test key
@@ -605,10 +664,12 @@ window.featurama = ( function( window , document , undefined ) {
 		},
 
 
-		/* Public Method remove
-		** parameter { string } - key of the test to be removed from cache / localStorage
-		** about - this removes a given test, based on the given key to be removed from cache as well as clear results and config for given test.
-		**/
+		/** 
+			This removes a given test, based on the given key to be removed from cache as well as clear results and config for given test.
+			
+			@method remove
+			@param {String} key The key of the test to be removed from cache / localStorage
+		*/
 		remove: function( key ) {
 
 			// clears any given test results of tests and test from cache
@@ -620,9 +681,11 @@ window.featurama = ( function( window , document , undefined ) {
 
 		},
 
-		/* Public Method clear
-		** about - this removes all tests in cache, as well as clears / resets the results and config objects.
-		**/
+		/** 
+			This removes all tests in cache, as well as clears / resets the results and config objects.
+			
+			@method clear
+		*/
 		clear: function() {
 
 			// gets all test from localStorage
@@ -641,27 +704,44 @@ window.featurama = ( function( window , document , undefined ) {
 
 		},
 
-		/* Public Method exists
-		** parameter { string } - key of the test to check in the cache / localStorage
-		** about - this checks if the given test exists in cache / localStorage based on the key and returns a Boolean
-		**/
+		/** 
+			This checks if the given test exists in cache / localStorage based on the key and returns a Boolean
+			
+			@method exists
+			@param {String} key The key of the test to check in the cache / localStorage
+		*/
 		exists: function( key ) {
 
 			return ( getFromLocalStorage( key ) ) ? true : false ;
 
 		},
 
-		/* Public Method keys
-		** about - this returns an Array of all keys currently cached / in localStorage
-		**/
+		/** 
+			This returns an Array of all keys currently cached / in localStorage
+			
+			@method keys
+		*/
 		keys: function() {
 
 			return getAllFromLocalStorage();
 
 		},
 
+		/** 
+			This is an object of all the results of the test. Each key of th results object will be the corresponding key of each test with a Boolean of the result from the tests run.
+			
+			@property results
+			@type {Object}
+		*/
 		results: {},
 
+		/** 
+			This is an object of all the overrides / configs for all the tests. This allows developers to pass a regex and an override for a given test allowing results to be "enforced".
+			This is mainly for certain tests that will return true on certain devices / browsers where the result should be false
+			
+			@property config
+			@type {Object}
+		*/
 		config: {}
 
 	};

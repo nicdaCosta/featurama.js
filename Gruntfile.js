@@ -72,6 +72,18 @@ module.exports = function(grunt) {
         }
       }
     },
+    yuidoc: {
+      compile: {
+          name: '<%= pkg.name %>',
+          description: '<%= pkg.description %>',
+          version: '<%= pkg.version %>',
+          url: '<%= pkg.homepage %>',
+          options: {
+            paths: 'src',
+            outdir: 'docs/'
+          }
+        }
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -96,8 +108,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'connect:server' , 'jasmine']);
+  grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify', 'connect:server' , 'jasmine' , 'yuidoc']);
 
 };
